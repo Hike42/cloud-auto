@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { db, storage, auth } from "../../utils/firebaseConfig"; // Vérifiez le chemin
+import { db, storage, auth } from "../../utils/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 
@@ -10,7 +10,7 @@ export default function CreateAdForm() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
-  const userId = auth.currentUser ? auth.currentUser.uid : null; // Récupérer l'ID de l'utilisateur connecté
+  const userId = auth.currentUser ? auth.currentUser.uid : null;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -25,28 +25,26 @@ export default function CreateAdForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!image || !userId) return; // Vérifiez si l'utilisateur est connecté et si une image est sélectionnée
+    if (!image || !userId) return;
     setUploading(true);
 
     const imageRef = ref(storage, `images/${userId}/${image.name}`);
     try {
       const snapshot = await uploadBytes(imageRef, image);
       const imageUrl = await getDownloadURL(snapshot.ref);
-      // Suite de votre code pour ajouter l'annonce dans Firestore
     } catch (error) {
       console.error("Erreur lors de l'upload de l'image:", error);
-      // Gérer l'erreur (par exemple, afficher un message à l'utilisateur)
     } finally {
       setUploading(false);
     }
 
-    const snapshot = await uploadBytes(imageRef, image); // Declare the 'snapshot' variable
-    const imageUrl = await getDownloadURL(snapshot.ref); // Use the 'snapshot' variable
+    const snapshot = await uploadBytes(imageRef, image);
+    const imageUrl = await getDownloadURL(snapshot.ref);
     await addDoc(collection(db, "ads"), {
-      userId, // Inclure l'ID de l'utilisateur
+      userId,
       title,
       price: Number(price),
-      imageUrl: imageUrl, // Use the 'imageUrl' variable
+      imageUrl: imageUrl,
     });
 
     setUploading(false);
@@ -92,7 +90,6 @@ export default function CreateAdForm() {
             className="w-full file:border file:border-gray-300 file:rounded-lg file:p-2 file:text-sm file:font-semibold file:bg-white file:text-blue-700 hover:file:bg-blue-50"
           />
         </div>
-        {/* Affichage de la prévisualisation de l'image */}
         {imagePreview && (
           <div className="mb-4">
             <p className="mb-2 text-sm font-medium text-gray-700">

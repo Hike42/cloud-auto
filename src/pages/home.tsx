@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db, auth } from "../../utils/firebaseConfig"; // Ajustez le chemin
+import { db, auth } from "../../utils/firebaseConfig";
 import Link from "next/link";
-import { useAuth } from "../auth"; // Ajustez le chemin vers votre hook useAuth
+import { useAuth } from "../auth";
 import { useRouter } from "next/router";
 import { signOut } from "firebase/auth";
 import Modal from "../modal";
@@ -42,7 +42,7 @@ const Annonces = () => {
           ...(doc.data() as Omit<Annonce, "id">),
         }));
 
-        console.log(annoncesData); // Vérifiez si des données sont retournées
+        console.log(annoncesData);
         setAnnonces(annoncesData);
       } catch (error) {
         console.error("Erreur lors de la récupération des annonces:", error);
@@ -56,7 +56,7 @@ const Annonces = () => {
     annonce.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  console.log(role); // Vérifiez si l'utilisateur et le rôle sont correctement récupérés
+  console.log(role);
 
   const handleLogout = async () => {
     try {

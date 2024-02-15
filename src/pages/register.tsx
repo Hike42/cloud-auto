@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../utils/firebaseConfig"; // Ajustez le chemin
+import { auth, db } from "../../utils/firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
-import { useRouter } from "next/router"; // Importez useRouter
+import { useRouter } from "next/router";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter(); // Créez une instance de useRouter
+  const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ export default function Register() {
         role,
       });
 
-      router.push("/"); // Redirection vers la page d'accueil
+      router.push("/");
     } catch (error) {
       setError(
         "Erreur lors de la création du compte. Veuillez vérifier les informations fournies."

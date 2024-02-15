@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../auth"; // Ajustez le chemin
-import { db, auth } from "../../utils/firebaseConfig"; // Ajustez le chemin
+import { useAuth } from "../auth";
+import { db, auth } from "../../utils/firebaseConfig";
 import {
   collection,
   query,

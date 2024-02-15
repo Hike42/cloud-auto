@@ -7,15 +7,14 @@ import React, {
   useCallback,
 } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "../utils/firebaseConfig"; // Ajustez le chemin selon votre projet
+import { auth } from "../utils/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../utils/firebaseConfig"; // Assurez-vous que ce chemin est correct
+import { db } from "../utils/firebaseConfig";
 
-// Ajouter 'setUser' dans 'AuthContextType' et ajouter 'role'
 export interface AuthContextType {
   user: User | null;
-  setUser: (user: User | null) => void; // Ajout de setUser
-  role: string | null; // Ajout du rôle de l'utilisateur
+  setUser: (user: User | null) => void;
+  role: string | null;
   loading: boolean;
 }
 
@@ -23,33 +22,33 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<string | null>(null); // État pour le rôle
+  const [role, setRole] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleSetUser = useCallback(async (user: User | null) => {
     setUser(user);
-    setLoading(true); // Commence par indiquer que le chargement est en cours
+    setLoading(true);
     if (user) {
       const userRef = doc(db, "users", user.uid);
       try {
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
-          setRole(docSnap.data().role); // Met à jour l'état avec le rôle récupéré
+          setRole(docSnap.data().role);
         } else {
           console.log("Aucun document pour cet utilisateur !");
-          setRole(null); // Réinitialise le rôle si aucun document n'est trouvé
+          setRole(null);
         }
       } catch (error) {
         console.error(
           "Erreur lors de la récupération du rôle de l'utilisateur",
           error
         );
-        setRole(null); // Gestion des erreurs
+        setRole(null);
       }
     } else {
-      setRole(null); // Réinitialise le rôle si aucun utilisateur n'est connecté
+      setRole(null);
     }
-    setLoading(false); // Indique la fin du chargement
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -58,7 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
     });
 
-    return unsubscribe; // Fonction de nettoyage qui se désabonne de l'écouteur d'authentification
+    return unsubscribe;
   }, [handleSetUser]);
 
   return (

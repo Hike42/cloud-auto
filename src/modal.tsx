@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
           borderRadius: "10px",
           boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
           margin: "4px",
-          maxWidth: "50%", // Réduire la largeur maximale à 50%
+          maxWidth: "50%",
           width: "100%",
           padding: "5px",
         }}
@@ -44,7 +44,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
             justifyContent: "space-between",
             alignItems: "center",
             marginBottom: "4px",
-            borderBottom: "2px solid #eee", // Ajouter une bordure pour séparer les articles
+            borderBottom: "2px solid #eee",
           }}
         >
           <h2
@@ -55,10 +55,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
           <button
             onClick={onClose}
             style={{
-              fontSize: "1.5em", // Augmenter la taille de la croix
+              fontSize: "1.5em",
               color: "black",
               marginRight: "10px",
-              padding: "5px", // Ajouter du padding pour augmenter la zone cliquable
+              padding: "5px",
             }}
           >
             &times;
@@ -67,7 +67,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
         {children}
       </div>
     </div>,
-    document.body // Ceci place le modal au niveau le plus haut dans le DOM.
+    document.body
   );
 };
 

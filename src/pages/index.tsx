@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { useRouter } from "next/router";
-import { auth, db } from "../../utils/firebaseConfig"; // Ajustez le chemin
+import { auth, db } from "../../utils/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
-import { useAuth } from "../auth"; // Ajustez le chemin
+import { useAuth } from "../auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,19 +26,17 @@ export default function Login() {
       );
       console.log("Connexion réussie");
 
-      // Récupérer les informations supplémentaires de l'utilisateur, y compris le rôle
       const userDocRef = doc(db, "users", userCredential.user.uid);
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        // Stocker les informations de l'utilisateur, y compris le rôle, dans l'état global ou le contexte
         setUser({
           ...userCredential.user,
-          role: userData.role, // Ajouter le rôle à l'objet utilisateur
-        } as User & { role: string }); // Update the type of User object to include the role property
+          role: userData.role,
+        } as User & { role: string });
 
-        router.push("/home"); // Redirigez vers la page souhaitée après la connexion
+        router.push("/home");
       } else {
         console.error("Aucunes données utilisateur trouvées dans Firestore");
         setError(

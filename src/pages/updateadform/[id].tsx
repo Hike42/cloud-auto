@@ -52,7 +52,7 @@ const UpdateAdForm = () => {
     e.preventDefault();
     setUploading(true);
 
-    let imageUrl = annonce.imageUrl; // Use the existing image URL by default
+    let imageUrl = annonce.imageUrl;
 
     if (image) {
       const imageRef = ref(storage, `images/${id}/${image.name}`);
