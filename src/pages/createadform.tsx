@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { db, storage, auth } from '../../utils/firebaseConfig';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore';
+import useAuthWithRole from '@/hooks/useAuthWithRole';
 
 export default function CreateAdForm() {
+  useAuthWithRole('vendeur');
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState<File | null>(null);

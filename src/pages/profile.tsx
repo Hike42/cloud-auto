@@ -12,6 +12,7 @@ import {
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import useAuthWithRole from '@/hooks/useAuthWithRole';
 
 interface Annonce {
   id: string;
@@ -22,6 +23,7 @@ interface Annonce {
 }
 
 const ProfilePage = () => {
+  useAuthWithRole('vendeur');
   const { user } = useAuth();
   const [annonces, setAnnonces] = useState<Annonce[]>([]);
   const router = useRouter();

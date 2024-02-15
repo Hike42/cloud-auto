@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { db, storage } from '../../../utils/firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import useAuthWithRole from '@/hooks/useAuthWithRole';
 
 interface Annonce {
   id?: string;
@@ -12,6 +13,7 @@ interface Annonce {
 }
 
 const UpdateAdForm = () => {
+  useAuthWithRole('vendeur');
   const [annonce, setAnnonce] = useState<Annonce>({ title: '', price: 0 });
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);

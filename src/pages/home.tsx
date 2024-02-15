@@ -6,6 +6,7 @@ import { useAuth } from '../auth';
 import { useRouter } from 'next/router';
 import { signOut } from 'firebase/auth';
 import Modal from '../modal';
+import useAuthWithRole from '@/hooks/useAuthWithRole';
 
 interface Annonce {
   id: string;
@@ -16,6 +17,7 @@ interface Annonce {
 }
 
 const Annonces = () => {
+  useAuthWithRole('client' || 'vendeur');
   const [annonces, setAnnonces] = useState<Annonce[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { user, role } = useAuth();
