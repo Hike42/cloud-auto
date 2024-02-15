@@ -68,7 +68,7 @@ const ProfilePage = () => {
       <div className="bg-gray-800 text-white p-4 flex justify-between items-center">
         <span>{user?.email}</span>
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          <Link href="/home">Retour aux annonces</Link>
+          <Link href="/home">Retour aux offres</Link>
         </button>
         <button
           onClick={handleLogout}
@@ -77,7 +77,7 @@ const ProfilePage = () => {
           Déconnexion
         </button>
       </div>
-      <h1 className="text-center font-bold my-4">Mes annonces</h1>
+      <h1 className="text-center font-bold my-4">Mes Offres</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
         {annonces.map((annonce) => (
           <div

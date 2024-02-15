@@ -79,7 +79,7 @@ const UpdateAdForm = () => {
   return (
     <div className="max-w-md mx-auto mt-10">
       <form onSubmit={handleSubmit} className="p-5 bg-white rounded-lg shadow">
-        <h2 className="text-lg font-semibold mb-4">Modifier l&apos;annonce</h2>
+        <h2 className="text-lg font-semibold mb-4">Modifier l&apos;Offre</h2>
         <div className="mb-4">
           <input
             type="text"

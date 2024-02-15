@@ -93,7 +93,7 @@ const Annonces = () => {
       {user && (
         <div className="flex justify-between mb-4">
           <p>Email: {user.email}</p>
-          <h2 className="text-2xl font-bold">Annonces</h2>
+          <h2 className="text-2xl font-bold">Offres</h2>
           <p>Rôle: {role}</p>
         </div>
       )}
