@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../utils/firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
-import { useRouter } from "next/router";
+import { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../../utils/firebaseConfig';
+import { doc, setDoc } from 'firebase/firestore';
+import { useRouter } from 'next/router';
 
 export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!role) {
-      setError("Veuillez sélectionner un rôle.");
+      setError('Veuillez sélectionner un rôle.');
       return;
     }
 
@@ -23,19 +23,19 @@ export default function Register() {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
-      console.log("Compte créé avec succès", userCredential.user);
+      console.log('Compte créé avec succès', userCredential.user);
 
-      await setDoc(doc(db, "users", userCredential.user.uid), {
+      await setDoc(doc(db, 'users', userCredential.user.uid), {
         email,
         role,
       });
 
-      router.push("/");
+      router.push('/');
     } catch (error) {
       setError(
-        "Erreur lors de la création du compte. Veuillez vérifier les informations fournies."
+        'Erreur lors de la création du compte. Veuillez vérifier les informations fournies.',
       );
       console.error(error);
     }
@@ -93,12 +93,12 @@ export default function Register() {
           </div>
           <div className="flex items-baseline justify-between">
             <button className="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900">
-              S'inscrire
+              S&apos;inscrire
             </button>
           </div>
           <div>
             <p className="mt-4">
-              Vous avez déjà un compte ?{" "}
+              Vous avez déjà un compte ?{' '}
               <a href="/" className="text-blue-600">
                 Se connecter
               </a>

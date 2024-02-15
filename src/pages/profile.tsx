@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../auth";
-import { db, auth } from "../../utils/firebaseConfig";
+import { useEffect, useState } from 'react';
+import { useAuth } from '../auth';
+import { db, auth } from '../../utils/firebaseConfig';
 import {
   collection,
   query,
@@ -8,10 +8,10 @@ import {
   getDocs,
   deleteDoc,
   doc,
-} from "firebase/firestore";
-import { signOut } from "firebase/auth";
-import { useRouter } from "next/router";
-import Link from "next/link";
+} from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface Annonce {
   id: string;
@@ -29,11 +29,11 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchAnnonces = async () => {
       if (user) {
-        const q = query(collection(db, "ads"), where("userId", "==", user.uid));
+        const q = query(collection(db, 'ads'), where('userId', '==', user.uid));
         const querySnapshot = await getDocs(q);
         const annoncesData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...(doc.data() as Omit<Annonce, "id">),
+          ...(doc.data() as Omit<Annonce, 'id'>),
         }));
         setAnnonces(annoncesData);
       }
@@ -42,9 +42,9 @@ const ProfilePage = () => {
   }, [user]);
 
   const handleDelete = async (id: string) => {
-    if (window.confirm("Êtes-vous sûr de vouloir supprimer cette annonce ?")) {
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')) {
       try {
-        await deleteDoc(doc(db, "ads", id));
+        await deleteDoc(doc(db, 'ads', id));
         setAnnonces(annonces.filter((annonce) => annonce.id !== id));
       } catch (error) {
         console.error("Erreur lors de la suppression de l'annonce :", error);
@@ -55,9 +55,9 @@ const ProfilePage = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push("/");
+      router.push('/');
     } catch (error) {
-      console.error("Erreur lors de la déconnexion :", error);
+      console.error('Erreur lors de la déconnexion :', error);
     }
   };
 
@@ -83,7 +83,7 @@ const ProfilePage = () => {
             className="border rounded shadow p-4 flex flex-col items-center"
           >
             <img
-              src={annonce.imageUrl || "https://via.placeholder.com/150"}
+              src={annonce.imageUrl || 'https://via.placeholder.com/150'}
               alt={annonce.title}
               className="mb-2 max-h-40 w-full object-cover rounded"
             />

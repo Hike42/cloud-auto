@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { db, storage, auth } from "../../utils/firebaseConfig";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
+import { useState } from 'react';
+import { db, storage, auth } from '../../utils/firebaseConfig';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc } from 'firebase/firestore';
 
 export default function CreateAdForm() {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -29,18 +29,10 @@ export default function CreateAdForm() {
     setUploading(true);
 
     const imageRef = ref(storage, `images/${userId}/${image.name}`);
-    try {
-      const snapshot = await uploadBytes(imageRef, image);
-      const imageUrl = await getDownloadURL(snapshot.ref);
-    } catch (error) {
-      console.error("Erreur lors de l'upload de l'image:", error);
-    } finally {
-      setUploading(false);
-    }
 
     const snapshot = await uploadBytes(imageRef, image);
     const imageUrl = await getDownloadURL(snapshot.ref);
-    await addDoc(collection(db, "ads"), {
+    await addDoc(collection(db, 'ads'), {
       userId,
       title,
       price: Number(price),
@@ -48,11 +40,11 @@ export default function CreateAdForm() {
     });
 
     setUploading(false);
-    setTitle("");
-    setPrice("");
+    setTitle('');
+    setPrice('');
     setImage(null);
     setImagePreview(null);
-    alert("Annonce créée avec succès !");
+    alert('Annonce créée avec succès !');
   };
 
   return (
@@ -81,7 +73,7 @@ export default function CreateAdForm() {
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-sm font-medium text-gray-700">
-            Photo de l'annonce
+            Photo de l&apos;annonce
           </label>
           <input
             type="file"
@@ -93,7 +85,7 @@ export default function CreateAdForm() {
         {imagePreview && (
           <div className="mb-4">
             <p className="mb-2 text-sm font-medium text-gray-700">
-              Prévisualisation de l'image :
+              Prévisualisation de l&apos;image :
             </p>
             <img
               src={imagePreview}
@@ -107,7 +99,7 @@ export default function CreateAdForm() {
           disabled={uploading}
           className="w-full p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-blue-300"
         >
-          {uploading ? "Publication..." : "Publier l'annonce"}
+          {uploading ? 'Publication...' : "Publier l'annonce"}
         </button>
       </form>
       <button className="w-full p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-300 mt-4">

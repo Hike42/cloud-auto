@@ -1,22 +1,22 @@
-import React, {
+import {
   createContext,
   useContext,
   useEffect,
   useState,
   ReactNode,
   useCallback,
-} from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "../utils/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../utils/firebaseConfig";
+} from 'react';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { auth } from '../utils/firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../utils/firebaseConfig';
 
-export interface AuthContextType {
+export type AuthContextType = {
   user: User | null;
   setUser: (user: User | null) => void;
   role: string | null;
   loading: boolean;
-}
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -29,19 +29,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(user);
     setLoading(true);
     if (user) {
-      const userRef = doc(db, "users", user.uid);
+      const userRef = doc(db, 'users', user.uid);
       try {
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
           setRole(docSnap.data().role);
         } else {
-          console.log("Aucun document pour cet utilisateur !");
+          console.log('Aucun document pour cet utilisateur !');
           setRole(null);
         }
       } catch (error) {
         console.error(
           "Erreur lors de la récupération du rôle de l'utilisateur",
-          error
+          error,
         );
         setRole(null);
       }
@@ -73,7 +73,7 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error(
-      "useAuth doit être utilisé à l'intérieur d'un AuthProvider"
+      "useAuth doit être utilisé à l'intérieur d'un AuthProvider",
     );
   }
   return context;

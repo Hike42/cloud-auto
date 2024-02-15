@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { db, storage } from "../../../utils/firebaseConfig";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { db, storage } from '../../../utils/firebaseConfig';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 interface Annonce {
   id?: string;
@@ -12,7 +12,7 @@ interface Annonce {
 }
 
 const UpdateAdForm = () => {
-  const [annonce, setAnnonce] = useState<Annonce>({ title: "", price: 0 });
+  const [annonce, setAnnonce] = useState<Annonce>({ title: '', price: 0 });
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -21,15 +21,15 @@ const UpdateAdForm = () => {
 
   useEffect(() => {
     const fetchAnnonce = async () => {
-      if (typeof id === "string") {
-        const docRef = doc(db, "ads", id);
+      if (typeof id === 'string') {
+        const docRef = doc(db, 'ads', id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
           setAnnonce({ id: docSnap.id, ...(docSnap.data() as Annonce) });
           setImagePreview(docSnap.data().imageUrl);
         } else {
-          alert("Annonce non trouvée");
+          alert('Annonce non trouvée');
         }
       }
     };
@@ -60,8 +60,8 @@ const UpdateAdForm = () => {
       imageUrl = await getDownloadURL(snapshot.ref);
     }
 
-    if (typeof id === "string") {
-      const annonceRef = doc(db, "ads", id);
+    if (typeof id === 'string') {
+      const annonceRef = doc(db, 'ads', id);
       await updateDoc(annonceRef, {
         title: annonce.title,
         price: annonce.price,
@@ -70,14 +70,14 @@ const UpdateAdForm = () => {
     }
 
     setUploading(false);
-    alert("Annonce mise à jour avec succès !");
-    router.push("/profile");
+    alert('Annonce mise à jour avec succès !');
+    router.push('/profile');
   };
 
   return (
     <div className="max-w-md mx-auto mt-10">
       <form onSubmit={handleSubmit} className="p-5 bg-white rounded-lg shadow">
-        <h2 className="text-lg font-semibold mb-4">Modifier l'annonce</h2>
+        <h2 className="text-lg font-semibold mb-4">Modifier l&apos;annonce</h2>
         <div className="mb-4">
           <input
             type="text"
@@ -102,7 +102,7 @@ const UpdateAdForm = () => {
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-sm font-medium text-gray-700">
-            Photo de l'annonce
+            Photo de l&apos;annonce
           </label>
           <input
             type="file"
@@ -113,7 +113,7 @@ const UpdateAdForm = () => {
         {imagePreview && (
           <div className="mb-4">
             <p className="mb-2 text-sm font-medium text-gray-700">
-              Prévisualisation de l'image :
+              Prévisualisation de l&apos;image :
             </p>
             <img
               src={imagePreview}
@@ -127,7 +127,7 @@ const UpdateAdForm = () => {
           disabled={uploading}
           className="w-full p-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-blue-300"
         >
-          {uploading ? "Mise à jour..." : "Mettre à jour l'annonce"}
+          {uploading ? 'Mise à jour...' : "Mettre à jour l'annonce"}
         </button>
       </form>
     </div>

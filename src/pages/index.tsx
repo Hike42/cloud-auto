@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { signInWithEmailAndPassword, User } from "firebase/auth";
-import { useRouter } from "next/router";
-import { auth, db } from "../../utils/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
-import Link from "next/link";
-import { useAuth } from "../auth";
+import { useState } from 'react';
+import { signInWithEmailAndPassword, User } from 'firebase/auth';
+import { useRouter } from 'next/router';
+import { auth, db } from '../../utils/firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
+import Link from 'next/link';
+import { useAuth } from '../auth';
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { user, setUser, role } = useAuth();
+  const { setUser } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,11 +22,11 @@ export default function Login() {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
-      console.log("Connexion réussie");
+      console.log('Connexion réussie');
 
-      const userDocRef = doc(db, "users", userCredential.user.uid);
+      const userDocRef = doc(db, 'users', userCredential.user.uid);
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
@@ -36,15 +36,15 @@ export default function Login() {
           role: userData.role,
         } as User & { role: string });
 
-        router.push("/home");
+        router.push('/home');
       } else {
-        console.error("Aucunes données utilisateur trouvées dans Firestore");
+        console.error('Aucunes données utilisateur trouvées dans Firestore');
         setError(
-          "Erreur lors de la récupération des informations de l'utilisateur."
+          "Erreur lors de la récupération des informations de l'utilisateur.",
         );
       }
     } catch (error) {
-      setError("Erreur de connexion. Veuillez réessayer plus tard.");
+      setError('Erreur de connexion. Veuillez réessayer plus tard.');
       console.error(error);
     } finally {
       setLoading(false);
@@ -91,13 +91,15 @@ export default function Login() {
               disabled={loading}
               className="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900 disabled:bg-blue-300"
             >
-              {loading ? "Connexion en cours..." : "Se connecter"}
+              {loading ? 'Connexion en cours...' : 'Se connecter'}
             </button>
           </div>
           <div className="mt-4">
-            Vous n'avez pas de compte ?{" "}
+            Vous n&apos;avez pas de compte ?{' '}
             <Link href="/register">
-              <p className="flex text-blue-600 justify-center">S'inscrire</p>
+              <p className="flex text-blue-600 justify-center">
+                S&apos;inscrire
+              </p>
             </Link>
           </div>
         </form>

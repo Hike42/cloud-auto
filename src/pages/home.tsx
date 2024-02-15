@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db, auth } from "../../utils/firebaseConfig";
-import Link from "next/link";
-import { useAuth } from "../auth";
-import { useRouter } from "next/router";
-import { signOut } from "firebase/auth";
-import Modal from "../modal";
+import { useEffect, useState } from 'react';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db, auth } from '../../utils/firebaseConfig';
+import Link from 'next/link';
+import { useAuth } from '../auth';
+import { useRouter } from 'next/router';
+import { signOut } from 'firebase/auth';
+import Modal from '../modal';
 
 interface Annonce {
   id: string;
@@ -17,7 +17,7 @@ interface Annonce {
 
 const Annonces = () => {
   const [annonces, setAnnonces] = useState<Annonce[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const { user, role } = useAuth();
   const [cart, setCart] = useState<Annonce[]>([]);
   const [isCartVisible, setIsCartVisible] = useState(false);
@@ -26,26 +26,26 @@ const Annonces = () => {
   useEffect(() => {
     const loadAnnonces = async () => {
       if (!auth.currentUser) {
-        console.log("Aucun utilisateur connecté");
+        console.log('Aucun utilisateur connecté');
         return;
       }
 
       try {
         const q = query(
-          collection(db, "ads"),
-          where("userId", "!=", auth.currentUser.uid)
+          collection(db, 'ads'),
+          where('userId', '!=', auth.currentUser.uid),
         );
 
         const querySnapshot = await getDocs(q);
         const annoncesData: Annonce[] = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...(doc.data() as Omit<Annonce, "id">),
+          ...(doc.data() as Omit<Annonce, 'id'>),
         }));
 
         console.log(annoncesData);
         setAnnonces(annoncesData);
       } catch (error) {
-        console.error("Erreur lors de la récupération des annonces:", error);
+        console.error('Erreur lors de la récupération des annonces:', error);
       }
     };
 
@@ -53,7 +53,7 @@ const Annonces = () => {
   }, []);
 
   const filteredAnnonces = annonces.filter((annonce) =>
-    annonce.title.toLowerCase().includes(searchQuery.toLowerCase())
+    annonce.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   console.log(role);
@@ -61,9 +61,9 @@ const Annonces = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push("/");
+      router.push('/');
     } catch (error) {
-      console.error("Erreur lors de la déconnexion :", error);
+      console.error('Erreur lors de la déconnexion :', error);
     }
   };
 
@@ -73,7 +73,7 @@ const Annonces = () => {
 
   const removeFromCart = (annonceId: string) => {
     setCart((currentCart) =>
-      currentCart.filter((item) => item.id !== annonceId)
+      currentCart.filter((item) => item.id !== annonceId),
     );
   };
 
@@ -82,7 +82,7 @@ const Annonces = () => {
   };
 
   const notifyCart = () => {
-    alert("Commande passée avec succès !");
+    alert('Commande passée avec succès !');
     setCart([]);
   };
 
@@ -103,7 +103,7 @@ const Annonces = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="p-2 border rounded w-full mr-4 bg-white text-black"
         />
-        {role === "vendeur" && (
+        {role === 'vendeur' && (
           <div className="flex">
             <Link href="/createadform">
               <p className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 justify-center flex items-center mr-4">
@@ -123,7 +123,7 @@ const Annonces = () => {
             </button>
           </div>
         )}
-        {role === "client" && (
+        {role === 'client' && (
           <div className="flex">
             <button
               onClick={toggleCart}
@@ -157,7 +157,7 @@ const Annonces = () => {
                 />
               </div>
             )}
-            {role === "client" && (
+            {role === 'client' && (
               <button
                 onClick={() => addToCart(annonce)}
                 className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
