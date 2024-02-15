@@ -2,19 +2,17 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../auth';
 
-const useAuthWithRole = (requiredRole: string) => {
-  const { user, role, loading } = useAuth();
+const useRequireAuth = () => {
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (loading) return;
-    if (!user || role !== requiredRole) {
+    if (!user) {
       console.log('Aucun utilisateur connecté');
       router.push('/');
     }
-  }, [user, role, loading, router, requiredRole]);
-
-  return { user, role };
+  }, [user, loading, router]);
 };
 
-export default useAuthWithRole;
+export default useRequireAuth;
