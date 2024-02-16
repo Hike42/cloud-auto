@@ -16,7 +16,7 @@ All project elements and files are accessible here, apart from the firebase rule
 ```
 - Implementation of a cloud solution (Firebase)
 - Use of the following Firebase services: Auth, Firestore DB and Firestorage
-- Use of a framework or similar (NextJS
+- Use of a framework or similar (NextJS)
 - Linter (ESLINT)
 - Formatter (Prettier)
 - Ecommerce application
