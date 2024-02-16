@@ -43,8 +43,6 @@ const Annonces = () => {
           id: doc.id,
           ...(doc.data() as Omit<Annonce, 'id'>),
         }));
-
-        console.log(annoncesData);
         setAnnonces(annoncesData);
       } catch (error) {
         console.error('Erreur lors de la récupération des annonces:', error);
@@ -57,8 +55,6 @@ const Annonces = () => {
   const filteredAnnonces = annonces.filter((annonce) =>
     annonce.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-
-  console.log(role);
 
   const handleLogout = async () => {
     try {

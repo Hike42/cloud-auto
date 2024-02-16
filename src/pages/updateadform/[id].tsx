@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { db, storage } from '../../../utils/firebaseConfig';
+import { db, storage, auth } from '../../../utils/firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import useAuthWithRole from '@/hooks/useAuthWithRole';
@@ -20,6 +20,8 @@ const UpdateAdForm = () => {
   const [uploading, setUploading] = useState(false);
   const router = useRouter();
   const { id } = router.query;
+
+  const userId = auth.currentUser?.uid;
 
   useEffect(() => {
     const fetchAnnonce = async () => {
@@ -52,12 +54,13 @@ const UpdateAdForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!userId) return;
     setUploading(true);
 
     let imageUrl = annonce.imageUrl;
 
-    if (image) {
-      const imageRef = ref(storage, `images/${id}/${image.name}`);
+    if (image && userId) {
+      const imageRef = ref(storage, `images/${userId}/${image.name}`);
       const snapshot = await uploadBytes(imageRef, image);
       imageUrl = await getDownloadURL(snapshot.ref);
     }
